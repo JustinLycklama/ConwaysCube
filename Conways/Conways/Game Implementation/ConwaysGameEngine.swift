@@ -29,7 +29,7 @@ class ConwaysGameEngine {
     weak var delegate: GameEngineDelegate?
     
     func initializeGame() {
-        let lifeData = initLifeData(n: 30)
+        let lifeData = initLifeData(n: 50)
         queueNextEvolution(currentLife: lifeData, evolutionDelay: .milliseconds(500))
     }
     
