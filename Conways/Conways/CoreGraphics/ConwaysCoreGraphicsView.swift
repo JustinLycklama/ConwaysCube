@@ -14,6 +14,7 @@ class ConwaysCoreGraphicsView: UIView {
     private var viewSize: CGSize = .zero
     private var cellSize: CGSize = .zero
     private var cellsPerEdge: Int = 0 { didSet { determineCellSize() }}
+    private let borderWidth: CGFloat = 0
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -27,7 +28,7 @@ class ConwaysCoreGraphicsView: UIView {
         let ctx = UIGraphicsGetCurrentContext()
         
         ctx?.setStrokeColor(UIColor.gray.cgColor)
-        ctx?.setLineWidth(2)
+        ctx?.setLineWidth(borderWidth)
         
         let rectangle = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height)
         ctx?.addRect(rectangle)

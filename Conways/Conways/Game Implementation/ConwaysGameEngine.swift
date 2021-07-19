@@ -29,8 +29,8 @@ class ConwaysGameEngine {
     weak var delegate: GameEngineDelegate?
     
     func initializeGame() {
-        let lifeData = initLifeData(n: 50)
-        queueNextEvolution(currentLife: lifeData, evolutionDelay: .milliseconds(500))
+        let lifeData = initLifeData(n: 200)
+        queueNextEvolution(currentLife: lifeData, evolutionDelay: .milliseconds(0))
     }
     
     // Create an nxn grid
@@ -64,33 +64,47 @@ class ConwaysGameEngine {
     
     private func evaluateNextStage(_ data: [LifeData], completion: @escaping ([LifeData], Set<Int>) -> Void) {
         var newLifeData: [LifeData?] = Array(repeating: nil, count: data.count)
+        var modifiedIndicies = Set<Int>()
         
         let group = DispatchGroup()
-        let queue = DispatchQueue(label: "thread-safe-obj", attributes: .concurrent)
-        
-        var modifiedIndicies = Set<Int>()
-
-        for i in 0..<data.count {
+         
+        for _ in 0..<data.count {
             group.enter()
-            DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-                let oldLifeData = data[i]
-                let nextLifeData: LifeData!
-
-                let neighbourCount = self?.countNeighbours(for: data, at: i) ?? 0
-                
-                if !oldLifeData.containsLife {
-                    nextLifeData = LifeData(alive: neighbourCount == 3)
-                } else {
-                    nextLifeData = LifeData(alive: neighbourCount >= 2 && neighbourCount <= 3)
-                }
-                
-                queue.async(flags: .barrier) {
-                    newLifeData[i] = nextLifeData
-                    if oldLifeData.containsLife != nextLifeData.containsLife {
-                        modifiedIndicies.insert(i)
+        }
+        
+        let numCores = ProcessInfo.processInfo.processorCount
+        let dataPerCore: Int = data.count / numCores
+        
+        for i in 0..<numCores {
+            let low = dataPerCore * i
+            var high = dataPerCore * (i + 1)
+            
+            // edge case for any remaining data fill in last core
+            if i == numCores - 1 {
+                high += data.count % numCores
+            }
+            
+            DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+                for i in low..<high {
+                    let oldLifeData = data[i]
+                    let nextLifeData: LifeData!
+                    
+                    let neighbourCount = self?.countNeighbours(for: data, at: i) ?? 0
+                    
+                    if !oldLifeData.containsLife {
+                        nextLifeData = LifeData(alive: neighbourCount == 3)
+                    } else {
+                        nextLifeData = LifeData(alive: neighbourCount >= 2 && neighbourCount <= 3)
                     }
                     
-                    group.leave()
+                     DispatchQueue.main.async {
+                        newLifeData[i] = nextLifeData
+                        if oldLifeData.containsLife != nextLifeData.containsLife {
+                            modifiedIndicies.insert(i)
+                        }
+                        
+                        group.leave()
+                    }
                 }
             }
         }
