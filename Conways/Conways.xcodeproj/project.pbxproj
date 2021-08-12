@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		627792EE26BD8CFB0027B89D /* LifeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627792ED26BD8CFB0027B89D /* LifeData.swift */; };
+		6288F71526BDD13500E9BCBB /* SquareDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6288F71426BDD13500E9BCBB /* SquareDataSet.swift */; };
 		6291FF8726A1FA1D00006438 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6291FF8626A1FA1D00006438 /* AppDelegate.swift */; };
 		6291FF8926A1FA1D00006438 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6291FF8826A1FA1D00006438 /* SceneDelegate.swift */; };
 		6291FF8B26A1FA1D00006438 /* ConwaysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6291FF8A26A1FA1D00006438 /* ConwaysViewController.swift */; };
@@ -16,11 +18,14 @@
 		6291FFA726A202C000006438 /* LifeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6291FFA526A202C000006438 /* LifeCollectionViewCell.swift */; };
 		6291FFA826A202C000006438 /* LifeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6291FFA626A202C000006438 /* LifeCollectionViewCell.xib */; };
 		6291FFAF26A2115000006438 /* ConwaysGameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6291FFAE26A2115000006438 /* ConwaysGameEngine.swift */; };
+		6294BFBB26AB395100788427 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6294BFBA26AB395100788427 /* AppSettings.swift */; };
 		7D6A9D8926A4B39600C4ACA4 /* SquareDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A9D8826A4B39600C4ACA4 /* SquareDisplayViewController.swift */; };
 		7D6A9D8C26A4B3D400C4ACA4 /* ConwaysCoreGraphicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D6A9D8B26A4B3D400C4ACA4 /* ConwaysCoreGraphicsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		627792ED26BD8CFB0027B89D /* LifeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeData.swift; sourceTree = "<group>"; };
+		6288F71426BDD13500E9BCBB /* SquareDataSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareDataSet.swift; sourceTree = "<group>"; };
 		6291FF8326A1FA1D00006438 /* Conways.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Conways.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6291FF8626A1FA1D00006438 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6291FF8826A1FA1D00006438 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -32,6 +37,7 @@
 		6291FFA526A202C000006438 /* LifeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCollectionViewCell.swift; sourceTree = "<group>"; };
 		6291FFA626A202C000006438 /* LifeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LifeCollectionViewCell.xib; sourceTree = "<group>"; };
 		6291FFAE26A2115000006438 /* ConwaysGameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConwaysGameEngine.swift; sourceTree = "<group>"; };
+		6294BFBA26AB395100788427 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		7D6A9D8826A4B39600C4ACA4 /* SquareDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareDisplayViewController.swift; sourceTree = "<group>"; };
 		7D6A9D8B26A4B3D400C4ACA4 /* ConwaysCoreGraphicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConwaysCoreGraphicsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -47,6 +53,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		627792F026BD8E750027B89D /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				627792ED26BD8CFB0027B89D /* LifeData.swift */,
+				6291FFAE26A2115000006438 /* ConwaysGameEngine.swift */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
 		6291FF7A26A1FA1D00006438 = {
 			isa = PBXGroup;
 			children = (
@@ -66,14 +81,10 @@
 		6291FF8526A1FA1D00006438 /* Conways */ = {
 			isa = PBXGroup;
 			children = (
-				6291FFAC26A20F3D00006438 /* Game Implementation */,
-				7D6A9D8726A4B36D00C4ACA4 /* CoreGraphics */,
-				6291FFAB26A20F3200006438 /* CollectionView */,
-				6291FF8626A1FA1D00006438 /* AppDelegate.swift */,
-				6291FF8826A1FA1D00006438 /* SceneDelegate.swift */,
-				6291FF8C26A1FA1D00006438 /* Main.storyboard */,
-				6291FF8F26A1FA2000006438 /* Assets.xcassets */,
-				6291FF9126A1FA2000006438 /* LaunchScreen.storyboard */,
+				6294BFBA26AB395100788427 /* AppSettings.swift */,
+				627792F026BD8E750027B89D /* Engine */,
+				6294BFB726AB388900788427 /* Square */,
+				6294BFBE26AB3F1D00788427 /* Resources */,
 				6291FF9426A1FA2000006438 /* Info.plist */,
 			);
 			path = Conways;
@@ -89,12 +100,34 @@
 			path = CollectionView;
 			sourceTree = "<group>";
 		};
-		6291FFAC26A20F3D00006438 /* Game Implementation */ = {
+		6294BFB726AB388900788427 /* Square */ = {
 			isa = PBXGroup;
 			children = (
-				6291FFAE26A2115000006438 /* ConwaysGameEngine.swift */,
+				6288F71426BDD13500E9BCBB /* SquareDataSet.swift */,
+				6294BFB826AB389B00788427 /* UI */,
 			);
-			path = "Game Implementation";
+			path = Square;
+			sourceTree = "<group>";
+		};
+		6294BFB826AB389B00788427 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				7D6A9D8726A4B36D00C4ACA4 /* CoreGraphics */,
+				6291FFAB26A20F3200006438 /* CollectionView */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		6294BFBE26AB3F1D00788427 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6291FF8626A1FA1D00006438 /* AppDelegate.swift */,
+				6291FF8826A1FA1D00006438 /* SceneDelegate.swift */,
+				6291FF8C26A1FA1D00006438 /* Main.storyboard */,
+				6291FF8F26A1FA2000006438 /* Assets.xcassets */,
+				6291FF9126A1FA2000006438 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		7D6A9D8726A4B36D00C4ACA4 /* CoreGraphics */ = {
@@ -181,8 +214,11 @@
 				6291FF8726A1FA1D00006438 /* AppDelegate.swift in Sources */,
 				6291FFAF26A2115000006438 /* ConwaysGameEngine.swift in Sources */,
 				7D6A9D8C26A4B3D400C4ACA4 /* ConwaysCoreGraphicsView.swift in Sources */,
+				6288F71526BDD13500E9BCBB /* SquareDataSet.swift in Sources */,
 				6291FFA726A202C000006438 /* LifeCollectionViewCell.swift in Sources */,
 				7D6A9D8926A4B39600C4ACA4 /* SquareDisplayViewController.swift in Sources */,
+				6294BFBB26AB395100788427 /* AppSettings.swift in Sources */,
+				627792EE26BD8CFB0027B89D /* LifeData.swift in Sources */,
 				6291FF8926A1FA1D00006438 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

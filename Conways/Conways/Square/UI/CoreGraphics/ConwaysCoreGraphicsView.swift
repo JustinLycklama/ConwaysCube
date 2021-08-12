@@ -29,11 +29,11 @@ class ConwaysCoreGraphicsView: UIView {
         
         ctx?.setStrokeColor(UIColor.gray.cgColor)
         ctx?.setLineWidth(borderWidth)
+                
+        let squareLength = min(viewSize.width, viewSize.height)
         
-        let rectangle = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height)
-        ctx?.addRect(rectangle)
-        ctx?.drawPath(using: .fillStroke)
-        
+        let startX = (viewSize.width / 2) - (squareLength / 2)
+        let startY = (viewSize.height / 2) - (squareLength / 2)
         
         for row in 0..<cellsPerEdge {
             for column in 0..<cellsPerEdge {
@@ -41,7 +41,7 @@ class ConwaysCoreGraphicsView: UIView {
                 
                 ctx?.setFillColor(cell.containsLife ? UIColor.black.cgColor : UIColor.white.cgColor)
 
-                let rectangle = CGRect(x: cellSize.width * CGFloat(column), y: cellSize.height * CGFloat(row), width: cellSize.width, height: cellSize.height)
+                let rectangle = CGRect(x: startX + cellSize.width * CGFloat(column), y: startY + cellSize.height * CGFloat(row), width: cellSize.width, height: cellSize.height)
                 ctx?.addRect(rectangle)
                 ctx?.drawPath(using: .fillStroke)
             }
@@ -64,14 +64,15 @@ class ConwaysCoreGraphicsView: UIView {
     }
 }
 
-extension ConwaysCoreGraphicsView: GameEngineDelegate {
-    func initialzeGame(n: Int, initialData: [LifeData]) {
-        self.lifeData = initialData
-        self.cellsPerEdge = n
+extension ConwaysCoreGraphicsView: SquareDataSetDelegate {
+    func newDataSet(data: [LifeData]) {
+        self.lifeData = data
+        self.cellsPerEdge = Int(Double(lifeData.count).squareRoot())
+        setNeedsDisplay()
     }
     
-    func nextLifeCycle(newData: [LifeData], modifiedIndicies: Set<Int>) {
-        self.lifeData = newData
+    func dataSetDidChange(data: [LifeData], modifiedIndicies: Set<Int>) {
+        self.lifeData = data
         setNeedsDisplay()
     }
 }

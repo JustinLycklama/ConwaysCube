@@ -8,10 +8,8 @@
 import UIKit
 
 class ConwaysViewController: UIViewController {
-
-    private let engine = ConwaysGameEngine()
     
-    private var lifeData: [LifeData] = []
+    private let dataSet = SquareDataSet()
     
     private let cellIdentifier = "Cell"
     private let spaceBetweenCells: CGFloat = 1
@@ -22,8 +20,8 @@ class ConwaysViewController: UIViewController {
         
         self.view.backgroundColor = .black
         
-        engine.delegate = self
-        engine.initializeGame()
+        dataSet.delegate = self
+        dataSet.newGame(n: 25)
     }
     
     fileprivate func determineCellSize(n: Int) -> CGSize {
@@ -83,31 +81,35 @@ class ConwaysViewController: UIViewController {
 
 extension ConwaysViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return lifeData.count
+        return dataSet.lifeData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? LifeCollectionViewCell else {
+            return UICollectionViewCell()
+        }
         
-        cell.backgroundColor = lifeData[indexPath.row].containsLife ? .black : .white
+        cell.backgroundColor = dataSet.lifeData[indexPath.row].containsLife ? .black : .white
+        
+        if AppSettings.shared.isDebug {
+            cell.setDebugString(dataSet.lifeData[indexPath.row].debugString)
+        }
         
         return cell
     }
 }
 
-extension ConwaysViewController: GameEngineDelegate {
-    func initialzeGame(n: Int, initialData: [LifeData]) {
-        self.lifeData = initialData
+extension ConwaysViewController: SquareDataSetDelegate {
+    func newDataSet(data: [LifeData]) {
+        let n =  Int(Double(data.count).squareRoot())
         
         let cellSize = determineCellSize(n: n)
         let layout = buildLayout(cellSize: cellSize)
-        
+
         setupCollection(layout, forCellSize: cellSize, withNItems: n)
     }
     
-    func nextLifeCycle(newData: [LifeData], modifiedIndicies: Set<Int>) {
-        self.lifeData = newData
-        
+    func dataSetDidChange(data: [LifeData], modifiedIndicies: Set<Int>) {
         collectionView?.reloadItems(at: modifiedIndicies.map { (index: Int) -> IndexPath in
             return IndexPath(row: index, section: 0)
         })

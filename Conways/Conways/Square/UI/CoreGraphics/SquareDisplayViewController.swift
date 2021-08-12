@@ -9,17 +9,16 @@ import UIKit
 
 class SquareDisplayViewController: UIViewController {
 
-    private let coreView = ConwaysCoreGraphicsView()
-    private let engine = ConwaysGameEngine()
-
+    private let coreView = ConwaysCoreGraphicsView()    
+    private let dataSet = SquareDataSet()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        engine.delegate = coreView
+        dataSet.delegate = coreView
         setupView()
         
-        engine.initializeGame()
+        dataSet.newGame(n: 25)
     }
     
     private func setupView() {
