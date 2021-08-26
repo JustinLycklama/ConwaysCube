@@ -10,7 +10,7 @@ import Foundation
 class ConwaysGameEngine {
     weak var dataSource: GameEngineDataSource?
     
-    func initializeGame(withDelay delay: DispatchTimeInterval = .milliseconds(500)) {
+    func initializeGame(withDelay delay: DispatchTimeInterval = AppSettings.shared.gameDelay) {
         queueNextEvolution(evolutionDelay: delay)
     }
 
