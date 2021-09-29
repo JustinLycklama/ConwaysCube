@@ -1,0 +1,26 @@
+// Vertex Shader Modifier
+
+// Implicit struct to use:
+ 
+// struct SCNShaderGeometry {
+//     vec3 position;
+//     vec3 normal;
+//     vec4 tangent;
+//     vec2 texcoords[kSCNTexcoordCount];
+// } _geometry;
+//
+// // Implicit uniforms:
+//    u_time float - The current system time (in seconds) since SceneKit started rendering with the shader.
+//    u_boundingBox mat32 - The bounding box of the geometry being rendered, in model space.
+//    u_modelTransform mat4 - The transform matrices used for converting vertex positions and normals between model, world, view, and clip coordinate spaces.
+//    u_inverseModelTransform mat4 - The inverse matrices corresponding to each transform.
+//    u_diffuseTexture sampler2D or samplerCube - The texture contents of the corresponding material property. Declared only if the material property’s contents object provides a texture image.
+
+//https://developer.apple.com/documentation/scenekit/scnshadable
+
+uniform float Amplitude = 4;
+ 
+_geometry.position +=
+    vec4(_geometry.normal, 1.0) *
+    (Amplitude*_geometry.position.y*_geometry.position.x) *
+    sin(1.0 * u_time);

@@ -12,12 +12,14 @@ class AppSettings {
     static let shared = AppSettings()
     
     let isDebug = false
-    let gameType: GameType = .flatCube
-    let gameDelay: DispatchTimeInterval = .milliseconds(500)    
+    let gameType: GameType = .squareSceneKit
+    let gameDelay: DispatchTimeInterval = .seconds(1)
     
     enum GameType {
         case squareCollection
         case squareCoreGraphics
+        case squareSceneKit
+        case squareMetal
         case flatCube
         
         var viewController: UIViewController {
@@ -26,6 +28,10 @@ class AppSettings {
                 return ConwaysViewController()
             case .squareCoreGraphics:
                 return SquareDisplayViewController()
+            case .squareSceneKit:
+                return SquareDisplaySceneKitController()
+            case .squareMetal:
+                return MetalViewController()
             case .flatCube:
                 return FlattenedCubeViewController()
             }

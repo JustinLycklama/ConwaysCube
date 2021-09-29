@@ -1,0 +1,36 @@
+// Fragment Shader Modifier
+
+// Implicit struct to use:
+/*
+ struct SCNShaderOutput {
+    vec4 color;
+ } _output;
+ */
+
+// https://developer.apple.com/documentation/scenekit/scnshadable
+
+/*
+ The shader modifier was a good place to start, but ended up not being viable for conways.
+ Only primitive data can be sent from the CPU to the GPU using shader modifiers, the largest being a float4 or mat4.
+ For a 16x16 game of conways, we need to send 256 peices of data to the GPU.
+ */
+
+// 16x16 game
+#define GAME_SIZE 2
+#define MAX_VALUE_COUNT GAME_SIZE*GAME_SIZE
+#define segmentSize 0.5 // 1 / GAME_SIZE
+
+float values[MAX_VALUE_COUNT];
+
+// grab uv coords from our material
+float2 uv = _surface.diffuseTexcoord;
+
+float segmentX = floor(uv.x / segmentSize);
+float staircaseValueX = segmentX / GAME_SIZE;
+
+float segmentY = floor(uv.y / segmentSize);
+float staircaseValueY = segmentY / GAME_SIZE;
+
+int coordinate = GAME_SIZE * segmentY + segmentX;
+
+_output.color.rgb = (float3(1.0) * (staircaseValueX/2 + staircaseValueY/2)) - _output.color.rgb;
