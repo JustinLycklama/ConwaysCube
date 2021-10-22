@@ -8,10 +8,6 @@
 import UIKit
 import SceneKit
 
-struct TMPStruct {
-    var values: [Int]
-}
-
 class SquareDisplaySceneKitController: UIViewController {
     
     override var prefersStatusBarHidden: Bool {
@@ -19,7 +15,7 @@ class SquareDisplaySceneKitController: UIViewController {
     }
     
     // MUST equal value in SCNProgram
-    private let gameN = 8
+    private let gameN = 16
     
     private let dataSet = SquareDataSet()
     
@@ -48,24 +44,11 @@ class SquareDisplaySceneKitController: UIViewController {
         cameraNode.position = SCNVector3(x: 0, y: 0, z: 1)
         
         let box = SCNBox(width: 1, height: 1, length: 0.01, chamferRadius: 0)
-    
-        // Shader Modifiers (Modification to default Metal Shader)
-        /*
-        let vertexShader = (try? String(contentsOfFile: Bundle.main.path(forResource: "shaderModifier", ofType: "vertex")!,
-                                        encoding: String.Encoding.utf8)) ?? ""
-        let fragmentShader = (try? String(contentsOfFile: Bundle.main.path(forResource: "shaderModifier", ofType: "fragment")!,
-                                          encoding: String.Encoding.utf8)) ?? ""
-        
-        box.shaderModifiers = [
-            SCNShaderModifierEntryPoint.geometry: vertexShader,
-            SCNShaderModifierEntryPoint.fragment: fragmentShader
-        ]
-         */
         
         // Shader Program (Custom Metal Shader)
         let program = SCNProgram()
-        program.fragmentFunctionName = "ProgFragmentShader"
-        program.vertexFunctionName = "ProgVertexShader"
+        program.fragmentFunctionName = "SquareFragmentShader"
+        program.vertexFunctionName = "SquareVertexShader"
         program.delegate = self
 
         material.program = program
@@ -87,30 +70,13 @@ class SquareDisplaySceneKitController: UIViewController {
         scnView.backgroundColor = .white
         scnView.loops = true
         scnView.isPlaying = true
+        scnView.backgroundColor = .lightGray
         
-//        var tmpArray: [Int8] = [1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0]
-
         let initialArray = [Int8](repeating: 0, count: gameN*gameN)
         
         if let device = scnView.device {
             material.setValue(ShaderUtilities.ArraytoData(initialArray, usingDevice: device), forKey: "game_data");
         }
-        
-        
-        
-//        let sizeOfElement = MemoryLayout<Int8>.stride
-//        let sizeOfUniformBuffer = sizeOfElement * tmpArray.count
-//
-//        let buffer = scnView.device?.makeBuffer(length: sizeOfUniformBuffer, options: .cpuCacheModeWriteCombined)
-//        let pointer = buffer?.contents()
-//
-//        if let pointer = pointer {
-//            for i in 0..<tmpArray.count {
-//                memcpy(pointer + (i * sizeOfElement), &tmpArray[i], sizeOfElement)
-//            }
-//
-//            mat.setValue(Data(bytes: pointer, count: sizeOfUniformBuffer), forKey: "game_data");
-//        }
         
         self.view.addSubview(scnView)
 
@@ -145,12 +111,9 @@ extension SquareDisplaySceneKitController: SCNProgramDelegate {
 extension SquareDisplaySceneKitController: SquareDataSetDelegate {
     func newDataSet(data: [LifeData]) {
         displayLifeData(data: data)
-//        self.lifeData = data
-//        self.cellsPerEdge = Int(Double(lifeData.count).squareRoot())
     }
     
     func dataSetDidChange(data: [LifeData], modifiedIndicies: Set<Int>) {
         displayLifeData(data: data)
-//        self.lifeData = data
     }
 }

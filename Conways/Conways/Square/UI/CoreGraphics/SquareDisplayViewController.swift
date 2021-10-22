@@ -18,7 +18,7 @@ class SquareDisplayViewController: UIViewController {
         dataSet.delegate = coreView
         setupView()
         
-        dataSet.newGame(n: 25)
+        dataSet.newGame(n: 45)
     }
     
     private func setupView() {
